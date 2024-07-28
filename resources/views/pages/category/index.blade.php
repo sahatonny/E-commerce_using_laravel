@@ -57,7 +57,7 @@
                             true
                         @else
                             False
-                        @endlif
+                        @endif
                 </td>
             <td scope="col">
                 <a href="{{route('category.edit'), $category->id}}">
