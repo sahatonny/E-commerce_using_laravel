@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Product List</title>
+    <title>Category List</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
@@ -31,13 +31,13 @@
             border-radius: 4px;
         }
 
-        .create-product {
+        .create-category {
             display: flex;
             justify-content: center;
             margin-bottom: 20px;
         }
 
-        .create-product a {
+        .create-category a {
             text-decoration: none;
             background-color: #007bff;
             color: white;
@@ -46,7 +46,7 @@
             transition: background-color 0.3s;
         }
 
-        .create-product a:hover {
+        .create-category a:hover {
             background-color: #0056b3;
         }
 
@@ -100,20 +100,16 @@
 </head>
 <body>
     <div class="container">
-        <h1>Product</h1>
+        <h1>Category</h1>
         @if(session()->has('success'))
             <div class="success-message">
                 {{ session('success') }}
             </div>
         @endif
 
-        <div class="create-product mb-4">
-            <a href="{{ route('product.create') }}" class="btn btn-success">Create a Product</a>
+        <div class="create-category">
+            <a href="{{ route('category.create') }}">Create a Category</a>
         </div>
-
-
-
-
 
         <table class="table table-striped">
             <thead>
@@ -128,18 +124,18 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($products as $product)
+                @foreach($categories as $category)
                     <tr>
-                        <td>{{ $product->id }}</td>
-                        <td>{{ $product->name }}</td>
-                        <td>{{ $product->quantity }}</td>
-                        <td>{{ $product->price }}</td>
-                        <td>{{ $product->description }}</td>
+                        <td>{{ $category->id }}</td>
+                        <td>{{ $category->name }}</td>
+                        <td>{{ $category->quantity }}</td>
+                        <td>{{ $category->price }}</td>
+                        <td>{{ $category->description }}</td>
                         <td class="edit-link">
-                            <a href="{{ route('product.edit', ['product' => $product]) }}">Edit</a>
+                            <a href="{{ route('category.edit', ['category' => $category]) }}">Edit</a>
                         </td>
                         <td>
-                            <form method="post" action="{{ route('product.destroy', ['product' => $product]) }}" class="delete-form">
+                            <form method="post" action="{{ route('category.destroy', ['category' => $category]) }}" class="delete-form">
                                 @csrf
                                 @method('delete')
                                 <input type="submit" value="Delete" />
@@ -149,7 +145,6 @@
                 @endforeach
             </tbody>
         </table>
-
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

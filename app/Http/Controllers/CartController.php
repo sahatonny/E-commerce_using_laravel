@@ -1,60 +1,63 @@
 <?php
-
 namespace App\Http\Controllers;
 
+use App\Models\CartItem;
+use App\Models\Product;
 use Illuminate\Http\Request;
-use App\Models\Cart;
+use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
     public function index()
     {
-        // Get the authenticated user
-        $user = auth()->user();
-
-        // Check if the user has a cart, if not, create a new cart
-        $cart = $user->cart ?? Cart::create(['user_id' => $user->id]);
-
-        return view('cart.index', compact('cart'));
+        $cartItems = CartItem::where('user_id', Auth::id())->with('product')->get();
+        return view('cart.index', compact('cartItems'));
     }
 
     public function add(Request $request)
     {
-        // Get the authenticated user
-        $user = auth()->user();
+        $product = Product::find($request->product_id);
 
-        // Check if the user has a cart, if not, create a new cart
-        $cart = $user->cart ?? Cart::create(['user_id' => $user->id]);
+        if (!$product) {
+            return redirect()->back()->with('error', 'Product not found.');
+        }
 
-        // Get the current items in the cart, or initialize an empty array if null
-        $items = $cart->items ?? [];
-        
-        // Add the new item to the cart
-        $items[] = $request->input('item');
+        $cartItem = CartItem::where('user_id', Auth::id())->where('product_id', $product->id)->first();
 
-        // Update the cart with the new items
-        $cart->update(['items' => $items]);
+        if ($cartItem) {
+            $cartItem->quantity += $request->quantity;
+            $cartItem->save();
+        } else {
+            CartItem::create([
+                'user_id' => Auth::id(),
+                'product_id' => $product->id,
+                'quantity' => $request->quantity,
+            ]);
+        }
 
-        return redirect()->route('cart.index');
+        return redirect()->route('cart.index')->with('success', 'Product added to cart.');
     }
 
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
-        // Get the authenticated user's cart
-        $cart = auth()->user()->cart;
+        $cartItem = CartItem::find($id);
 
-        // Update the cart items
-        $cart->update(['items' => $request->input('items')]);
+        if ($cartItem) {
+            $cartItem->quantity = $request->quantity;
+            $cartItem->save();
+        }
 
-        return redirect()->route('cart.index');
+        return redirect()->route('cart.index')->with('success', 'Cart updated.');
     }
 
-    public function show($id)
+    public function remove($id)
     {
-        // Get the specific cart by ID
-        $cart = Cart::findOrFail($id);
+        $cartItem = CartItem::find($id);
 
-        return view('cart.show', compact('cart'));
+        if ($cartItem) {
+            $cartItem->delete();
+        }
+
+        return redirect()->route('cart.index')->with('success', 'Item removed from cart.');
     }
 }
-

@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CartController;
 
 Route::get('/', function () {
@@ -28,25 +30,42 @@ Route::middleware('auth')->group(function () {
     Route::put('/product/{product}/update', [ProductController::class, 'update'])->name('product.update');
     Route::delete('/product/{product}/destroy', [ProductController::class, 'destroy'])->name('product.destroy');
     });
-    
+Route::resource('category', CategoryController::class);
+Route::middleware('auth')->group(function () {
+        Route::get('/category', [CategoryController::class, 'index'])->name('category.index');
+        Route::get('/category/create', [CategoryController::class, 'create'])->name('category.create');
+        Route::post('/category', [CategoryController::class, 'store'])->name('category.store');
+        Route::get('/category/{category}/edit', [CategoryController::class, 'edit'])->name('category.edit');
+        Route::put('/category/{category}/update', [CategoryController::class, 'update'])->name('category.update');
+        Route::delete('/category/{category}/destroy', [CategoryController::class, 'destroy'])->name('category.destroy');
+        });
 
-   
-Route::resource('cart', CartController::class);
+Route::middleware('auth')->group(function () {
+    //Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+    //Route::get('/cart/add', [CartController::class, 'add'])->name('cart.add');
+    //Route::post('/cart', [CartController::class, 'store'])->name('cart.store');
+    //Route::get('cart/{cart}/edit', [CartController::class, 'edit'])->name('cart.edit');
+    //Route::put('cart/{cart}/update', [CartController::class, 'update'])->name('cart.update');
+    //Route::delete('cart/{cart}/destroy', [CartController::class, 'remove'])->name('cart.remove');
+
+    //Route::get('/cart', [CartController::class, 'showCart'])->name('cart.show');
+    //Route::get('/cart/add', [CartController::class, 'add'])->name('cart.add');
+    //Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
+
+});
+
 Route::middleware('auth')->group(function () {
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
     Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
-    Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
-    Route::get('/cart/{id}', [CartController::class, 'show'])->name('cart.show'); // Add this route if you need a show method
-    });
-    
-    Route::prefix('admin')->middleware('admin')->group(function () {
-        Route::get('category',function(){
-            return view('admin.category.index');
-
-        });
+    Route::post('/cart/update/{id}', [CartController::class, 'update'])->name('cart.update');
+    Route::post('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
+});
 
 
-    });
+Route::get('/user/{id}/profile', [UserProfileController::class, 'show'])->name('user.profile');
+
+
+
 
 require __DIR__.'/auth.php';
 require __DIR__.'/admin-auth.php';

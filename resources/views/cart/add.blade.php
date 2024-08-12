@@ -1,10 +1,11 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Add a Product</title>
+    <title>Add to Cart</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
@@ -52,46 +53,38 @@
     </style>
 </head>
 <body>
-    <h1>Create a Product</h1>
+    <h1>Add to Cart</h1>
     <div class="container">
         @if($errors->any())
             <div class="alert alert-danger">
                 <ul class="error-list">
                     @foreach($errors->all() as $error)
-                        <li>{{$error}}</li>
+                        <li>{{ $error }}</li>
                     @endforeach
                 </ul>
             </div>
         @endif
-        <form method="post" action="{{route('cart.store')}}">
+
+        <form method="post" action="{{ route('cart.store') }}">
             @csrf
-            <div class="row">
-                <div class="col-md-6 mx-auto">
-                    <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" class="form-control" id="name" name="name" placeholder="Name" />
-                    </div>
-                    <div class="form-group">
-                        <label for="quantity">Quantity</label>
-                        <input type="text" class="form-control" id="quantity" name="quantity" placeholder="Quantity" />
-                    </div>
-                    <div class="form-group">
-                        <label for="price">Price</label>
-                        <input type="text" class="form-control" id="price" name="price" placeholder="Price" />
-                    </div>
-                    <div class="form-group">
-                        <label for="description">Description</label>
-                        <textarea class="form-control" id="description" name="description" placeholder="Description"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <input type="submit" class="btn btn-primary" value="Save a New Product" />
-                    </div>
-                </div>
+            <div class="form-group">
+                <label for="product_id">Product ID</label>
+                <input type="text" class="form-control" id="product_id" name="product_id" placeholder="Product ID" required />
             </div>
+
+            <div class="form-group">
+                <label for="quantity">Quantity</label>
+                <input type="number" class="form-control" id="quantity" name="quantity" placeholder="Quantity" min="1" value="1" required />
+            </div>
+
+            <button type="submit" class="btn btn-primary">Add to Cart</button>
+
         </form>
     </div>
+
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
+

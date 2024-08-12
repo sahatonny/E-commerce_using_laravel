@@ -57,4 +57,14 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+    public function profile()
+{
+    $cartItems = session()->get('cart', []);
+    return view('user.profile', ['cartItems' => $cartItems]);
+}
+
+public function orders()
+{
+    return $this->hasMany(Order::class);
+}
 }
