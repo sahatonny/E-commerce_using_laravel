@@ -1,11 +1,12 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserProfileController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\PaymentController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -15,6 +16,7 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::resource('profile', ProfileController::class);
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -60,6 +62,24 @@ Route::middleware('auth')->group(function () {
     Route::post('/cart/update/{id}', [CartController::class, 'update'])->name('cart.update');
     Route::post('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
 });
+
+
+Route::middleware(['auth'])->group(function () {
+
+    //Route::post('/payment/process', [PaymentController::class, 'process'])->name('payment.process');
+    //Route::post('/payment/store', [PaymentController::class, 'store'])->name('payment.store');
+    Route::get('/payment/process', [PaymentController::class, 'show'])->name('payment.process');
+    Route::post('/payment/process', [PaymentController::class, 'process'])->name('payment.process.submit');
+});
+
+
+//Route::post('/payment/process', [PaymentController::class, 'process'])->name('payment.process');
+//Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
+
+// Payment Route
+
+
+
 
 
 Route::get('/user/{id}/profile', [UserProfileController::class, 'show'])->name('user.profile');

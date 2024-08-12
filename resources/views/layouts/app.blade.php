@@ -29,6 +29,10 @@
 
             <!-- Page Content -->
             <main>
+                <div class="container-fluid px-4">
+                    @yield('content')
+
+                </div>
 
             </main>
         </div>
