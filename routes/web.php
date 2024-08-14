@@ -8,6 +8,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\CheckoutController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -96,8 +97,7 @@ Route::middleware(['auth'])->group(function () {
 
 
 
-
-
+Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
 
 
 Route::get('/user/{id}/profile', [UserProfileController::class, 'show'])->name('user.profile');

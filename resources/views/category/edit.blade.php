@@ -21,7 +21,7 @@
         @endif
     </div>
     <form method="post" action="{{route('category.update', ['category' => $category])}}">
-        @csrf 
+        @csrf
         @method('put')
         <div>
             <label>Name</label>
@@ -29,7 +29,7 @@
         </div>
         <div>
             <label>Quantity</label>
-            <input type="text" name="quantity" placeholder="quantity" value="{{$category->quantity}}" />
+            <input type="text" name="quantity" placeholder="Quantity" value="{{$category->quantity}}" />
         </div>
         <div>
             <label>Price</label>

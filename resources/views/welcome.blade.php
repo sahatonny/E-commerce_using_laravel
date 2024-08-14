@@ -13,7 +13,7 @@
   <meta name="description" content="" />
   <meta name="author" content="" />
 
-  <title>Shopify</title>
+  <title>Home</title>
 
 
   <!-- bootstrap core css -->
@@ -54,6 +54,9 @@
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="/product">Products</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/category">Category</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="contact.html">Contact Us</a>
@@ -192,9 +195,9 @@
     <!-- end slider section -->
   </div>
 
-  <!-- furniture section
+  <!-- furniture section-->
 
-  <section class="furniture_section layout_padding">
+  <!-- <section class="furniture_section layout_padding">
     <div class="container">
       <div class="heading_container">
         <h2>
@@ -327,10 +330,8 @@
         </div>
       </div>
     </div>
-  </section>
-
- end furniture section -->
-
+  </section> end furniture section-->
+ 
  <div class="container my-5">
     <div class="row justify-content-center">
         <div class="col-md-3 col-sm-6 mb-4">
@@ -347,13 +348,16 @@
                             <label for="quantity">Quantity</label>
                             <input type="number" class="form-control" id="quantity" name="quantity" placeholder="Quantity" min="1" value="1" required />
                         </div>
-                        <button type="submit" class="btn btn-primary btn-block mt-auto">Add to Cart</button>
+
+                       <button type="submit" class="btn btn-primary btn-block mt-auto">Add to Cart</button>
+
                     </form>
 
                 </div>
 
             </div>
         </div>
+
         <div class="col-md-3 col-sm-6 mb-4">
             <div class="card shadow-sm h-100">
                 <img src="{{ asset('images/laptop.jpg') }}" class="card-img-top" alt="Laptop">
@@ -413,7 +417,7 @@
         </div>
 
     </div>
-</div> -->
+</div>
 
 
   <!-- about section -->

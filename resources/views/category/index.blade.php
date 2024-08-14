@@ -107,10 +107,13 @@
             </div>
         @endif
 
+
+        @if(Auth::user()->isAdmin())
         <div class="create-category">
             <a href="{{ route('category.create') }}">Create a Category</a>
         </div>
-
+        @endif
+        
         <table class="table table-striped">
             <thead>
                 <tr>

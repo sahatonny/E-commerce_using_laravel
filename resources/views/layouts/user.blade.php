@@ -16,10 +16,8 @@
 
         @include('layouts.partials.usernavbar')
         <div id="layoutSidenav">
-
             <div id="layoutSidenav_nav">
                 @include('layouts.partials.usersidebar')
-
             </div>
 
             <div id="layoutSidenav_content">
@@ -29,10 +27,9 @@
                     </div>
 
                 </main>
-
-            </div>
+           </div>
         </div>
- @include('layouts.partials.userfootar')
+        @include('layouts.partials.userfootar')
 
 
 

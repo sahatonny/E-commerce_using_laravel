@@ -13,29 +13,20 @@
 
     </head>
     <body class="sb-nav-fixed">
-
-        
-
         @include('layouts.partials.navbar')
         <div id="layoutSidenav">
-
             <div id="layoutSidenav_nav">
                 @include('layouts.partials.sidebar')
-
             </div>
 
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
                         @yield('content')
-
                     </div>
                 </main>
                 @include('layouts.partials.footar')
-
-
-
-
+                
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="{{asset('admin/js/scripts.js')}}"></script>
     <script src="{{asset('admin/js/datatables-simple-demo.js')}}"></script>
