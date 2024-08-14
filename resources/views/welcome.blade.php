@@ -1,243 +1,722 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laravel App</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body, html {
-            height: 100%;
-        }
-        .hero {
-            background: url('download.jpeg') no-repeat center center;
-            background-size: cover;
-            color: white;
-            height: 100vh;
-            position: relative;
-        }
-        .hero-overlay {
-            background: rgba(0, 0, 0, 0.5);
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .hero-text {
-            text-align: center;
-        }
-        .btn-custom {
-            background: linear-gradient(45deg, #ff6f61, #de4313);
-            border: none;
-            color: white;
-        }
-        .footer {
-            background-color: #343a40;
-            color: white;
-            padding: 20px 0;
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-        }
-    </style>
+  <!-- Basic -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!-- Mobile Metas -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <!-- Site Metas -->
+  <link rel="icon" href="images/fevicon.png" type="image/gif" />
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+
+  <title>Shopify</title>
+
+
+  <!-- bootstrap core css -->
+  <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
+
+  <!-- fonts style -->
+  <link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&display=swap" rel="stylesheet" />
+
+  <!-- font awesome style -->
+  <link href="css/font-awesome.min.css" rel="stylesheet" />
+  <!-- Custom styles for this template -->
+  <link href="css/style.css" rel="stylesheet" />
+  <!-- responsive style -->
+  <link href="css/responsive.css" rel="stylesheet" />
+
 </head>
-<body class="bg-light d-flex flex-column">
 
-    <header class="bg-dark py-3 sticky-top">
-        <nav class="container d-flex justify-content-between align-items-center">
-            <div class="d-flex align-items-center">
-                <a class="text-white h4 mr-4" href="/">Home</a>
-            </div>
-            <div>
-                <ul class="nav">
-                    @guest
-                        <li class="nav-item">
-                            <a class="btn btn-custom text-white mx-1" href="/login">
-                                <i class="fas fa-sign-in-alt"></i> Login
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="btn btn-custom text-white mx-1" href="/register">
-                                <i class="fas fa-user-plus"></i> Register
-                            </a>
-                        </li>
-                    @endguest
-                    @auth
-                        <li class="nav-item">
-                            <a class="nav-link text-white" href="/dashboard">Dashboard</a>
-                        </li>
-                    @endauth
-                </ul>
-            </div>
+<body>
+
+  <div class="hero_area">
+    <!-- header section strats -->
+    <header class="header_section long_section px-0">
+        <nav class="navbar navbar-expand-lg custom_nav-container">
+          <a class="navbar-brand" href="/">
+            <span>Home</span>
+          </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mx-auto">
+              <li class="nav-item active">
+                <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="about.html">About</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/product">Products</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="contact.html">Contact Us</a>
+              </li>
+            </ul>
+            <ul class="navbar-nav">
+                @guest
+                  <li class="nav-item">
+                    <a class="nav-link" href="{{ route('login') }}">
+                      <i class="fas fa-sign-in-alt"></i> Login
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{{ route('register') }}">
+                      <i class="fas fa-user-plus"></i> Register
+                    </a>
+                  </li>
+                @endguest
+                @auth
+                  <li class="nav-item">
+                    <a class="nav-link" href="/dashboard">
+                      <i class="fas fa-tachometer-alt"></i> Dashboard
+                    </a>
+                  </li>
+                @endauth
+              </ul>
+
+          </div>
         </nav>
-    </header>
+      </header>
 
 
-
-
-
-    <div class="container my-5">
-        <div class="row justify-content-center">
-            <div class="col-md-3 col-sm-6 mb-4">
-                <div class="card shadow-sm h-100">
-                    <img src="{{ asset('images/smartphone.jpg') }}" class="card-img-top" alt="Smartphone">
-                    <div class="card-body d-flex flex-column">
-                        <h5 class="card-title">Smartphone</h5>
-                        <p class="card-text flex-grow-1">High-end smartphone with latest features.</p>
-                        <form method="post" action="{{ route('cart.add') }}">
-                            @csrf
-                            <input type="hidden" name="product_id" value="4">
-                            <input type="hidden" name="user_id" value="{{ Auth::id() }}">
-                            <div class="form-group">
-                                <label for="quantity">Quantity</label>
-                                <input type="number" class="form-control" id="quantity" name="quantity" placeholder="Quantity" min="1" value="1" required />
-                            </div>
-                            <button type="submit" class="btn btn-primary btn-block mt-auto">Add to Cart</button>
-                        </form>
+    <!-- end header section -->
+    <!-- slider section -->
+    <section class="slider_section long_section">
+      <div id="customCarousel" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <div class="container ">
+              <div class="row">
+                <div class="col-md-5">
+                  <div class="detail-box">
+                    <h1>
+                      For All Your <br>
+                      Furniture Needs
+                    </h1>
+                    <p>
+                      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Minus quidem maiores perspiciatis, illo maxime voluptatem a itaque suscipit.
+                    </p>
+                    <div class="btn-box">
+                      <a href="" class="btn1">
+                        Contact Us
+                      </a>
+                      <a href="" class="btn2">
+                        About Us
+                      </a>
                     </div>
+                  </div>
                 </div>
+                <div class="col-md-7">
+                  <div class="img-box">
+                    <img src="images/slider-img.png" alt="">
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="col-md-3 col-sm-6 mb-4">
-                <div class="card shadow-sm h-100">
-                    <img src="{{ asset('images/laptop.jpg') }}" class="card-img-top" alt="Laptop">
-                    <div class="card-body d-flex flex-column">
-                        <h5 class="card-title">Laptop</h5>
-                        <p class="card-text flex-grow-1">Powerful laptop for all your needs.</p>
-                        <form method="post" action="{{ route('cart.add') }}">
-                            @csrf
-                            <input type="hidden" name="product_id" value="2">
-                            <input type="hidden" name="user_id" value="{{ Auth::id() }}">
-                            <div class="form-group">
-                                <label for="quantity">Quantity</label>
-                                <input type="number" class="form-control" id="quantity" name="quantity" placeholder="Quantity" min="1" value="1" required />
-                            </div>
-                            <button type="submit" class="btn btn-primary btn-block mt-auto">Add to Cart</button>
-                        </form>
+          </div>
+          <div class="carousel-item">
+            <div class="container ">
+              <div class="row">
+                <div class="col-md-5">
+                  <div class="detail-box">
+                    <h1>
+                      For All Your <br>
+                      Furniture Needs
+                    </h1>
+                    <p>
+                      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Minus quidem maiores perspiciatis, illo maxime voluptatem a itaque suscipit.
+                    </p>
+                    <div class="btn-box">
+                      <a href="" class="btn1">
+                        Contact Us
+                      </a>
+                      <a href="" class="btn2">
+                        About Us
+                      </a>
                     </div>
+                  </div>
                 </div>
+                <div class="col-md-7">
+                  <div class="img-box">
+                    <img src="images/slider-img.png" alt="">
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="col-md-3 col-sm-6 mb-4">
-                <div class="card shadow-sm h-100">
-                    <img src="{{ asset('images/fridge.jpg') }}" class="card-img-top" alt="Fridge">
-                    <div class="card-body d-flex flex-column">
-                        <h5 class="card-title">Fridge</h5>
-                        <p class="card-text flex-grow-1">Spacious fridge for all your needs.</p>
-                        <form method="post" action="{{ route('cart.add') }}">
-                            @csrf
-                            <input type="hidden" name="product_id" value="3">
-                            <input type="hidden" name="user_id" value="{{ Auth::id() }}">
-                            <div class="form-group">
-                                <label for="quantity">Quantity</label>
-                                <input type="number" class="form-control" id="quantity" name="quantity" placeholder="Quantity" min="1" value="1" required />
-                            </div>
-                            <button type="submit" class="btn btn-primary btn-block mt-auto">Add to Cart</button>
-                        </form>
+          </div>
+          <div class="carousel-item">
+            <div class="container ">
+              <div class="row">
+                <div class="col-md-5">
+                  <div class="detail-box">
+                    <h1>
+                      For All Your <br>
+                      Furniture Needs
+                    </h1>
+                    <p>
+                      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Minus quidem maiores perspiciatis, illo maxime voluptatem a itaque suscipit.
+                    </p>
+                    <div class="btn-box">
+                      <a href="" class="btn1">
+                        Contact Us
+                      </a>
+                      <a href="" class="btn2">
+                        About Us
+                      </a>
                     </div>
+                  </div>
                 </div>
-            </div>
-            <div class="col-md-3 col-sm-6 mb-4">
-                <div class="card shadow-sm h-100">
-                    <img src="{{ asset('images/TV.jpg') }}" class="card-img-top" alt="TV">
-                    <div class="card-body d-flex flex-column">
-                        <h5 class="card-title">TV</h5>
-                        <p class="card-text flex-grow-1">Smart TV for all your needs.</p>
-                        <form method="post" action="{{ route('cart.add') }}">
-                            @csrf
-                            <input type="hidden" name="product_id" value="5">
-                            <input type="hidden" name="user_id" value="{{ Auth::id() }}">
-                            <div class="form-group">
-                                <label for="quantity">Quantity</label>
-                                <input type="number" class="form-control" id="quantity" name="quantity" placeholder="Quantity" min="1" value="1" required />
-                            </div>
-                            <button type="submit" class="btn btn-primary btn-block mt-auto">Add to Cart</button>
-                        </form>
-                    </div>
+                <div class="col-md-7">
+                  <div class="img-box">
+                    <img src="images/slider-img.png" alt="">
+                  </div>
                 </div>
+              </div>
             </div>
-
+          </div>
         </div>
-    </div> -->
+        <ol class="carousel-indicators">
+          <li data-target="#customCarousel" data-slide-to="0" class="active"></li>
+          <li data-target="#customCarousel" data-slide-to="1"></li>
+          <li data-target="#customCarousel" data-slide-to="2"></li>
+        </ol>
+      </div>
+    </section>
+    <!-- end slider section -->
+  </div>
 
-  <!--  <div class="container my-5">
-        <div class="row justify-content-center">
-            <div class="col-md-2 col-sm-6 mb-4">
-                <div class="card shadow-sm h-100">
-                    <img src="{{ asset('images/TV.jpg') }}" class="card-img-top" alt="TV">
-                    <div class="card-body d-flex flex-column">
-                        <h5 class="card-title">TV</h5>
-                        <p class="card-text flex-grow-1">Smart TV for all your needs.</p>
-                        <form method="post" action="{{ route('cart.add') }}">
-                            @csrf
-                            <input type="hidden" name="product_id" value="5">
-                            <input type="hidden" name="user_id" value="{{ Auth::id() }}">
-                            <div class="form-group">
-                                <label for="quantity">Quantity</label>
-                                <input type="number" class="form-control" id="quantity" name="quantity" placeholder="Quantity" min="1" value="1" required />
-                            </div>
-                            <button type="submit" class="btn btn-primary btn-block mt-auto">Add to Cart</button>
-                        </form>
-                    </div>
-                </div>
+  <!-- furniture section
+
+  <section class="furniture_section layout_padding">
+    <div class="container">
+      <div class="heading_container">
+        <h2>
+          Our Furniture
+        </h2>
+        <p>
+          which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't an
+        </p>
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-lg-4">
+          <div class="box">
+            <div class="img-box">
+              <img src="images/f1.png" alt="">
             </div>
-            <div class="col-md-2 col-sm-6 mb-4">
-                <div class="card shadow-sm h-100">
-                    <img src="{{ asset('images/headphone.jpg') }}" class="card-img-top" alt="TV">
-                    <div class="card-body d-flex flex-column">
-                        <h5 class="card-title">Headphone</h5>
-                        <p class="card-text flex-grow-1">Headphone for all your needs.</p>
-                        <form method="post" action="{{ route('cart.add') }}">
-                            @csrf
-                            <input type="hidden" name="product_id" value="5">
-                            <input type="hidden" name="user_id" value="{{ Auth::id() }}">
-                            <div class="form-group">
-                                <label for="quantity">Quantity</label>
-                                <input type="number" class="form-control" id="quantity" name="quantity" placeholder="Quantity" min="1" value="1" required />
-                            </div>
-                            <button type="submit" class="btn btn-primary btn-block mt-auto">Add to Cart</button>
-                        </form>
-                    </div>
-                </div>
+            <div class="detail-box">
+              <h5>
+                brown Chair Design
+              </h5>
+              <div class="price_box">
+                <h6 class="price_heading">
+                  <span>$</span> 100.00
+                </h6>
+                <a href="/cart">
+                  Buy Now
+                </a>
+              </div>
             </div>
-            <div class="col-md-2 col-sm-6 mb-4">
-                <div class="card shadow-sm h-100">
-                    <img src="{{ asset('images/keyboard.jpg') }}" class="card-img-top" alt="TV">
-                    <div class="card-body d-flex flex-column">
-                        <h5 class="card-title">Keyboard & Mouse </h5>
-                        <p class="card-text flex-grow-1">Keyboard set for all your needs.</p>
-                        <form method="post" action="{{ route('cart.add') }}">
-                            @csrf
-                            <input type="hidden" name="product_id" value="5">
-                            <input type="hidden" name="user_id" value="{{ Auth::id() }}">
-                            <div class="form-group">
-                                <label for="quantity">Quantity</label>
-                                <input type="number" class="form-control" id="quantity" name="quantity" placeholder="Quantity" min="1" value="1" required />
-                            </div>
-                            <button type="submit" class="btn btn-primary btn-block mt-auto">Add to Cart</button>
-                        </form>
-                    </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="box">
+            <div class="img-box">
+              <img src="images/f2.png" alt="">
+            </div>
+            <div class="detail-box">
+              <h5>
+                Double Bed Design
+              </h5>
+              <div class="price_box">
+                <h6 class="price_heading">
+                  <span>$</span> 200.00
+                </h6>
+                <a href="/cart">
+                  Buy Now
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="box">
+            <div class="img-box">
+              <img src="images/f3.png" alt="">
+            </div>
+            <div class="detail-box">
+              <h5>
+                House Chair Design
+              </h5>
+              <div class="price_box">
+                <h6 class="price_heading">
+                  <span>$</span> 200.00
+                </h6>
+                <a href="/cart">
+                  Buy Now
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="box">
+            <div class="img-box">
+              <img src="images/f4.png" alt="">
+            </div>
+            <div class="detail-box">
+              <h5>
+                brown Table Design
+              </h5>
+              <div class="price_box">
+                <h6 class="price_heading">
+                  <span>$</span> 100.00
+                </h6>
+                <a href="/cart">
+                  Buy Now
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="box">
+            <div class="img-box">
+              <img src="images/f5.png" alt="">
+            </div>
+            <div class="detail-box">
+              <h5>
+                Blue Chair Design
+              </h5>
+              <div class="price_box">
+                <h6 class="price_heading">
+                  <span>$</span> 200.00
+                </h6>
+                <a href="/cart">
+                  Buy Now
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-4">
+          <div class="box">
+            <div class="img-box">
+              <img src="images/f6.png" alt="">
+            </div>
+            <div class="detail-box">
+              <h5>
+                Brown Table Design
+              </h5>
+              <div class="price_box">
+                <h6 class="price_heading">
+                  <span>$</span> 200.00
+                </h6>
+                <a href="/cart">
+                  Buy Now
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+ end furniture section -->
+
+ <div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-3 col-sm-6 mb-4">
+            <div class="card shadow-sm h-100">
+                <img src="{{ asset('images/smartphone.jpg') }}" class="card-img-top" alt="Smartphone">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">Smartphone</h5>
+                    <p class="card-text flex-grow-1">High-end smartphone with latest features.</p>
+                    <form method="post" action="{{ route('cart.add') }}">
+                        @csrf
+                        <input type="hidden" name="product_id" value="4">
+                        <input type="hidden" name="user_id" value="{{ Auth::id() }}">
+                        <div class="form-group">
+                            <label for="quantity">Quantity</label>
+                            <input type="number" class="form-control" id="quantity" name="quantity" placeholder="Quantity" min="1" value="1" required />
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block mt-auto">Add to Cart</button>
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6 mb-4">
+            <div class="card shadow-sm h-100">
+                <img src="{{ asset('images/laptop.jpg') }}" class="card-img-top" alt="Laptop">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">Laptop</h5>
+                    <p class="card-text flex-grow-1">Powerful laptop for all your needs.</p>
+                    <form method="post" action="{{ route('cart.add') }}">
+                        @csrf
+                        <input type="hidden" name="product_id" value="2">
+                        <input type="hidden" name="user_id" value="{{ Auth::id() }}">
+                        <div class="form-group">
+                            <label for="quantity">Quantity</label>
+                            <input type="number" class="form-control" id="quantity" name="quantity" placeholder="Quantity" min="1" value="1" required />
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block mt-auto">Add to Cart</button>
+                    </form>
                 </div>
             </div>
         </div>
-    </div>-->
+        <div class="col-md-3 col-sm-6 mb-4">
+            <div class="card shadow-sm h-100">
+                <img src="{{ asset('images/fridge.jpg') }}" class="card-img-top" alt="Fridge">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">Fridge</h5>
+                    <p class="card-text flex-grow-1">Spacious fridge for all your needs.</p>
+                    <form method="post" action="{{ route('cart.add') }}">
+                        @csrf
+                        <input type="hidden" name="product_id" value="3">
+                        <input type="hidden" name="user_id" value="{{ Auth::id() }}">
+                        <div class="form-group">
+                            <label for="quantity">Quantity</label>
+                            <input type="number" class="form-control" id="quantity" name="quantity" placeholder="Quantity" min="1" value="1" required />
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block mt-auto">Add to Cart</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6 mb-4">
+            <div class="card shadow-sm h-100">
+                <img src="{{ asset('images/TV.jpg') }}" class="card-img-top" alt="TV">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">TV</h5>
+                    <p class="card-text flex-grow-1">Smart TV for all your needs.</p>
+                    <form method="post" action="{{ route('cart.add') }}">
+                        @csrf
+                        <input type="hidden" name="product_id" value="5">
+                        <input type="hidden" name="user_id" value="{{ Auth::id() }}">
+                        <div class="form-group">
+                            <label for="quantity">Quantity</label>
+                            <input type="number" class="form-control" id="quantity" name="quantity" placeholder="Quantity" min="1" value="1" required />
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block mt-auto">Add to Cart</button>
+                    </form>
+                </div>
+            </div>
+        </div>
 
-    <footer class="footer text-center mt-auto">
-        <div class="container">
-            <p>&copy; 2024 Laravel App. All Rights Reserved.</p>
+    </div>
+</div> -->
+
+
+  <!-- about section -->
+
+  <section class="about_section layout_padding long_section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="img-box">
+            <img src="images/about-img.png" alt="">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="detail-box">
+            <div class="heading_container">
+              <h2>
+                About Us
+              </h2>
+            </div>
             <p>
-                <a href="#" class="text-white mx-2"><i class="fab fa-facebook-f"></i></a>
-                <a href="#" class="text-white mx-2"><i class="fab fa-twitter"></i></a>
-                <a href="#" class="text-white mx-2"><i class="fab fa-instagram"></i></a>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Corrupti dolorem eum consequuntur ipsam repellat dolor soluta aliquid laborum, eius odit consectetur vel quasi in quidem, eveniet ab est corporis tempore.
             </p>
+            <a href="">
+              Read More
+            </a>
+          </div>
         </div>
-    </footer>
+      </div>
+    </div>
+  </section>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <!-- end about section -->
+
+
+
+  <!-- client section -->
+
+  <section class="client_section layout_padding-bottom">
+    <div class="container">
+      <div class="heading_container">
+        <h2>
+          Testimonial
+        </h2>
+      </div>
+      <div id="carouselExample2Controls" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <div class="row">
+              <div class="col-md-11 col-lg-10 mx-auto">
+                <div class="box">
+                  <div class="img-box">
+                    <img src="images/client.jpg" alt="" />
+                  </div>
+                  <div class="detail-box">
+                    <div class="name">
+                      <i class="fa fa-quote-left" aria-hidden="true"></i>
+                      <h6>
+                        Siaalya
+                      </h6>
+                    </div>
+                    <p>
+                      It is a long established fact that a reader will be
+                      distracted by the readable cIt is a long established fact
+                      that a reader will be distracted by the readable.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div class="row">
+              <div class="col-md-11 col-lg-10 mx-auto">
+                <div class="box">
+                  <div class="img-box">
+                    <img src="images/client.jpg" alt="" />
+                  </div>
+                  <div class="detail-box">
+                    <div class="name">
+                      <i class="fa fa-quote-left" aria-hidden="true"></i>
+                      <h6>
+                        Siaalya
+                      </h6>
+                    </div>
+                    <p>
+                      It is a long established fact that a reader will be
+                      distracted by the readable cIt is a long established fact
+                      that a reader will be distracted by the readable.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <div class="row">
+              <div class="col-md-11 col-lg-10 mx-auto">
+                <div class="box">
+                  <div class="img-box">
+                    <img src="images/client.jpg" alt="" />
+                  </div>
+                  <div class="detail-box">
+                    <div class="name">
+                      <i class="fa fa-quote-left" aria-hidden="true"></i>
+                      <h6>
+                        Siaalya
+                      </h6>
+                    </div>
+                    <p>
+                      It is a long established fact that a reader will be
+                      distracted by the readable cIt is a long established fact
+                      that a reader will be distracted by the readable c
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="carousel_btn-container">
+          <a class="carousel-control-prev" href="#carouselExample2Controls" role="button" data-slide="prev">
+            <i class="fa fa-long-arrow-left" aria-hidden="true"></i>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="carousel-control-next" href="#carouselExample2Controls" role="button" data-slide="next">
+            <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+            <span class="sr-only">Next</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- end client section -->
+
+  <!-- contact section -->
+  <section class="contact_section  long_section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form_container">
+            <div class="heading_container">
+              <h2>
+                Contact Us
+              </h2>
+            </div>
+            <form action="">
+              <div>
+                <input type="text" placeholder="Your Name" />
+              </div>
+              <div>
+                <input type="text" placeholder="Phone Number" />
+              </div>
+              <div>
+                <input type="email" placeholder="Email" />
+              </div>
+              <div>
+                <input type="text" class="message-box" placeholder="Message" />
+              </div>
+              <div class="btn_box">
+                <button>
+                  SEND
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="map_container">
+            <div class="map">
+              <div id="googleMap"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- end contact section -->
+
+  <!-- info section -->
+  <section class="info_section long_section">
+
+    <div class="container">
+      <div class="contact_nav">
+        <a href="">
+          <i class="fa fa-phone" aria-hidden="true"></i>
+          <span>
+            Call : +01 123455678990
+          </span>
+        </a>
+        <a href="">
+          <i class="fa fa-envelope" aria-hidden="true"></i>
+          <span>
+            Email : demo@gmail.com
+          </span>
+        </a>
+        <a href="">
+          <i class="fa fa-map-marker" aria-hidden="true"></i>
+          <span>
+            Location
+          </span>
+        </a>
+      </div>
+
+      <div class="info_top ">
+        <div class="row ">
+          <div class="col-sm-6 col-md-4 col-lg-3">
+            <div class="info_links">
+              <h4>
+                QUICK LINKS
+              </h4>
+              <div class="info_links_menu">
+                <a class="" href="">Home <span class="sr-only">(current)</span></a>
+                <a class="" href=""> About</a>
+                <a class="" href="">Furniture</a>
+                <a class="" href="">Blog</a>
+                <a class="" href="">Contact Us</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-4 col-lg-3 mx-auto">
+            <div class="info_post">
+              <h5>
+                INSTAGRAM FEEDS
+              </h5>
+              <div class="post_box">
+                <div class="img-box">
+                  <img src="images/f1.png" alt="">
+                </div>
+                <div class="img-box">
+                  <img src="images/f2.png" alt="">
+                </div>
+                <div class="img-box">
+                  <img src="images/f3.png" alt="">
+                </div>
+                <div class="img-box">
+                  <img src="images/f4.png" alt="">
+                </div>
+                <div class="img-box">
+                  <img src="images/f5.png" alt="">
+                </div>
+                <div class="img-box">
+                  <img src="images/f6.png" alt="">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="info_form">
+              <h4>
+                SIGN UP TO OUR NEWSLETTER
+              </h4>
+              <form action="">
+                <input type="text" placeholder="Enter Your Email" />
+                <button type="submit">
+                  Subscribe
+                </button>
+              </form>
+              <div class="social_box">
+                <a href="">
+                  <i class="fa fa-facebook" aria-hidden="true"></i>
+                </a>
+                <a href="">
+                  <i class="fa fa-twitter" aria-hidden="true"></i>
+                </a>
+                <a href="">
+                  <i class="fa fa-linkedin" aria-hidden="true"></i>
+                </a>
+                <a href="">
+                  <i class="fa fa-instagram" aria-hidden="true"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- end info_section -->
+
+
+  <!-- footer section -->
+  <footer class="footer_section">
+    <div class="container">
+      <p>
+        &copy; <span id="displayYear"></span> All Rights Reserved By
+        <a href="https://html.design/">Free Html Templates</a>
+      </p>
+    </div>
+  </footer>
+  <!-- footer section -->
+
+
+  <!-- jQery -->
+  <script src="js/jquery-3.4.1.min.js"></script>
+  <!-- bootstrap js -->
+  <script src="js/bootstrap.js"></script>
+  <!-- custom js -->
+  <script src="js/custom.js"></script>
+  <!-- Google Map -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap"></script>
+  <!-- End Google Map -->
+
 </body>
+
 </html>

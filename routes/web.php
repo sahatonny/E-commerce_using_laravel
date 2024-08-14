@@ -7,6 +7,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\OrderController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -18,7 +19,9 @@ Route::get('/dashboard', function () {
 
 Route::resource('profile', ProfileController::class);
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    //Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+
+    Route::get('profile/{profile}/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
@@ -67,7 +70,7 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth'])->group(function () {
 
     //Route::post('/payment/process', [PaymentController::class, 'process'])->name('payment.process');
-    //Route::post('/payment/store', [PaymentController::class, 'store'])->name('payment.store');
+    Route::post('/payment/store', [PaymentController::class, 'store'])->name('payment.store');
     Route::get('/payment/process', [PaymentController::class, 'show'])->name('payment.process');
     Route::post('/payment/process', [PaymentController::class, 'process'])->name('payment.process.submit');
 });
@@ -77,6 +80,21 @@ Route::middleware(['auth'])->group(function () {
 //Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
 
 // Payment Route
+
+
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+    Route::get('/orders/confirm', [OrderController::class, 'confirm'])->name('orders.confirm');
+    //Route::get('/orders/{id}', [OrderController::class, 'show'])->name('orders.show');
+    Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
+    Route::post('/orders/create', [OrderController::class, 'create'])->name('orders.create');
+    Route::get('/orders/{id}', [OrderController::class, 'show'])->name('orders.show');
+
+});
+
+
+
 
 
 

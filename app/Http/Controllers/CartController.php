@@ -35,11 +35,11 @@ class CartController extends Controller
             ]);
         }
 
-        //return redirect()->route('cart.index')->with('success', 'Product added to cart.');
-        return redirect()->route('payment.process')->with('success', 'Product added to cart. Please proceed to payment.');
+        return redirect()->route('cart.index')->with('success', 'Product added to cart.');
+        //return redirect()->route('payment.process')->with('success', 'Product added to cart. Please proceed to payment.');
 }
 
-    
+
 
     public function update(Request $request, $id)
     {

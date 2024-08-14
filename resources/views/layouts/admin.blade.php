@@ -12,7 +12,9 @@
 
 
     </head>
-    <body class="sb-nav-fixed"> 
+    <body class="sb-nav-fixed">
+
+        
 
         @include('layouts.partials.navbar')
         <div id="layoutSidenav">
@@ -30,7 +32,7 @@
                     </div>
                 </main>
                 @include('layouts.partials.footar')
-                
+
 
 
 

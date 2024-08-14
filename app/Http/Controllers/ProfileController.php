@@ -11,15 +11,15 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
-    /**
-     * Display the user's profile form.
-     */
+
+
     public function edit(Request $request): View
     {
         return view('profile.edit', [
             'user' => $request->user(),
         ]);
     }
+
 
     /**
      * Update the user's profile information.
@@ -62,6 +62,12 @@ class ProfileController extends Controller
     $cartItems = session()->get('cart', []);
     return view('user.profile', ['cartItems' => $cartItems]);
 }
+
+public function isAdmin()
+{
+    return $this->role === 'admin'; 
+}
+
 
 public function orders()
 {

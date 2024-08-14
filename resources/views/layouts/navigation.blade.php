@@ -34,9 +34,12 @@
                     </x-slot>
 
                     <x-slot name="content">
-                        <x-dropdown-link :href="route('profile.edit')">
+                        <x-dropdown-link :href="route('profile.edit', Auth::user())">
                             {{ __('Profile') }}
                         </x-dropdown-link>
+                    </x-slot>
+
+
 
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
@@ -71,6 +74,8 @@
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
         </div>
+
+
 
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -107,11 +108,16 @@
             </div>
         @endif
 
+       <!-- <div class="create-product mb-4">
+            <a href="{{ route('product.create') }}" class="btn btn-success">Create a Product</a>
+        </div>
+        Assuming you have a 'create-product' permission -->
+
+        @if(Auth::user()->isAdmin())
         <div class="create-product mb-4">
             <a href="{{ route('product.create') }}" class="btn btn-success">Create a Product</a>
         </div>
-
-
+        @endif
 
 
 
@@ -157,3 +163,4 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
+

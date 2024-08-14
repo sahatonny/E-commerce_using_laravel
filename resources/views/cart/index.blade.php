@@ -3,92 +3,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Add to Cart</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title>Payment Form</title>
+    <link rel="stylesheet" href="styles.css">
+
     <style>
-        body {
-            background-color: #f8f9fa;
-        }
 
-        h1 {
-            text-align: center;
-            margin-top: 20px;
-            color: #333;
-        }
+    body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
 
-        .container {
-            margin-top: 30px;
-            max-width: 600px;
-        }
+    .form-container {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+}
 
-        .error-list {
-            color: #dc3545;
-            list-style-type: none;
-            padding: 0;
-        }
+    form h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+}
 
-        .error-list li {
-            margin-bottom: 5px;
-        }
+    .form-group {
+    margin-bottom: 15px;
+}
 
-        .form-group {
-            margin-bottom: 15px;
-        }
+    .form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+}
 
-        .btn-primary {
-            background-color: #007bff;
-            border-color: #007bff;
-        }
+    .form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
 
-        .btn-primary:hover {
-            background-color: #0056b3;
-            border-color: #004085;
-        }
+    .form-group input:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+}
 
-        .btn {
-            width: 100%;
-        }
-    </style>
+    .submit-btn {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    padding: 15px;
+    width: 100%;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+    .submit-btn:hover {
+    background-color: #218838;
+}
+
+
+     </style>
 </head>
 <body>
-    <h1>Add to Cart</h1>
-    <div class="container">
-        @if($errors->any())
-            <div class="alert alert-danger">
-                <ul class="error-list">
-                    @foreach($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-
-        <form method="post" action="{{ route('cart.add') }}">
+    <div class="form-container">
+        <form method="post" action="{{ route('payment.store') }}">
             @csrf
+            <h2>Payment Details</h2>
             <div class="form-group">
-                <label for="product_id">Product ID</label>
-                <input type="text" class="form-control" id="product_id" name="product_id" placeholder="Product ID" required />
+                <label for="card_name">Name on Card</label>
+                <input type="text" id="card_name" name="card_name" placeholder="Cardholder Name" required>
             </div>
-
             <div class="form-group">
-                <label for="user_id">User ID</label>
-                <input type="text" class="form-control" id="user_id" name="user_id" placeholder="User ID" required />
+                <label for="card_number">Credit Card Number</label>
+                <input type="text" id="card_number" name="card_number" placeholder="Card Number" required>
             </div>
-
             <div class="form-group">
-                <label for="quantity">Quantity</label>
-                <input type="number" class="form-control" id="quantity" name="quantity" placeholder="Quantity" min="1" value="1" required />
+                <label for="card_expiration">Expiration</label>
+                <input type="text" id="card_expiration" name="card_expiration" placeholder="MM/YY" required>
             </div>
-
-            <button type="submit" class="btn btn-primary">Add to Cart</button>
-
-
+            <div class="form-group">
+                <label for="card_cvv">CVV</label>
+                <input type="text" id="card_cvv" name="card_cvv" placeholder="CVV" required>
+            </div>
+            <button type="submit" class="submit-btn">Complete Payment</button>
         </form>
     </div>
-
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
